@@ -39,6 +39,9 @@ Add `sorbet-rails` to the [`:default` group](https://bundler.io/v2.0/guides/grou
 
 # or run them all at once
 ❯ bundle exec rake rails_rbi:all
+
+# Optionally set this env var for more warnings
+SRB_RAILS_STRICT_DB_MODE=1 bundle exec rake rails_rbi:models
 ```
 
 4. Update hidden-definition files and automatically upgrade each file's typecheck level:

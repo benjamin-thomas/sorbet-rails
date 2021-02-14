@@ -74,6 +74,13 @@ module SorbetRails::ModelColumnUtils
 
   sig { params(column_def: T.untyped).returns(T::Boolean) }
   def nilable_column?(column_def)
+    if ENV['SRB_RAILS_STRICT_DB_MODE'] == '1'
+      out_of_sync = attribute_has_unconditional_presence_validation?(column_def.name) && column_def.null
+      if out_of_sync
+        warn "\033[1;31mWARNING for column '#{column_def.name}': presence is validated by the DB allows NULLs!\033[;1m"
+      end
+      return column_def.null
+    end
     !!(column_def.null && !attribute_has_unconditional_presence_validation?(column_def.name))
   end
 
